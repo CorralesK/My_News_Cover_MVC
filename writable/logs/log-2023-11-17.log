@@ -1,0 +1,116 @@
+CRITICAL - 2023-11-17 21:41:45 --> Undefined variable $category
+in APPPATH\Controllers\Categories.php on line 24.
+ 1 APPPATH\Controllers\Categories.php(24): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined variable $category', 'C:\\xampp\\htdocs\\mynewscover.com\\My_News_Cover_MVC\\app\\Controllers\\Categories.php', 24)
+ 2 SYSTEMPATH\CodeIgniter.php(942): App\Controllers\Categories->editCategory('1')
+ 3 SYSTEMPATH\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Categories))
+ 4 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-11-17 21:52:09 --> Undefined variable $category
+in APPPATH\Controllers\Categories.php on line 24.
+ 1 APPPATH\Controllers\Categories.php(24): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined variable $category', 'C:\\xampp\\htdocs\\mynewscover.com\\My_News_Cover_MVC\\app\\Controllers\\Categories.php', 24)
+ 2 SYSTEMPATH\CodeIgniter.php(942): App\Controllers\Categories->editCategory('1')
+ 3 SYSTEMPATH\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Categories))
+ 4 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-11-17 22:17:24 --> Call to undefined method App\Models\CategoriesModel::ordeBy
+in SYSTEMPATH\Model.php on line 873.
+ 1 APPPATH\Controllers\Categories.php(15): CodeIgniter\Model->__call('ordeBy', [...])
+ 2 SYSTEMPATH\CodeIgniter.php(942): App\Controllers\Categories->index()
+ 3 SYSTEMPATH\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Categories))
+ 4 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-11-17 22:18:15 --> Undefined variable $title
+in APPPATH\Views\templates\main.php on line 10.
+ 1 APPPATH\Views\templates\main.php(10): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined variable $title', 'C:\\xampp\\htdocs\\mynewscover.com\\My_News_Cover_MVC\\app\\Views\\templates\\main.php', 10)
+ 2 SYSTEMPATH\View\View.php(228): include('C:\\xampp\\htdocs\\mynewscover.com\\My_News_Cover_MVC\\app\\Views\\templates\\main.php')
+ 3 SYSTEMPATH\View\View.php(231): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH\View\View.php(244): CodeIgniter\View\View->render('templates/main', [], true)
+ 5 SYSTEMPATH\Common.php(1190): CodeIgniter\View\View->render('Categories/addCategory', [], true)
+ 6 APPPATH\Controllers\Categories.php(22): view('Categories/addCategory')
+ 7 SYSTEMPATH\CodeIgniter.php(942): App\Controllers\Categories->addCategory()
+ 8 SYSTEMPATH\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Categories))
+ 9 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+10 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-11-17 22:18:52 --> Undefined variable $title
+in APPPATH\Views\templates\main.php on line 10.
+ 1 APPPATH\Views\templates\main.php(10): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined variable $title', 'C:\\xampp\\htdocs\\mynewscover.com\\My_News_Cover_MVC\\app\\Views\\templates\\main.php', 10)
+ 2 SYSTEMPATH\View\View.php(228): include('C:\\xampp\\htdocs\\mynewscover.com\\My_News_Cover_MVC\\app\\Views\\templates\\main.php')
+ 3 SYSTEMPATH\View\View.php(231): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH\View\View.php(244): CodeIgniter\View\View->render('templates/main', [], true)
+ 5 SYSTEMPATH\Common.php(1190): CodeIgniter\View\View->render('Categories/addCategory', [], true)
+ 6 APPPATH\Controllers\Categories.php(24): view('Categories/addCategory')
+ 7 SYSTEMPATH\CodeIgniter.php(942): App\Controllers\Categories->addCategory()
+ 8 SYSTEMPATH\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Categories))
+ 9 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+10 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-11-17 23:40:44 --> Allowed fields must be specified for model: "App\Models\CategoriesModel"
+in SYSTEMPATH\Model.php on line 736.
+ 1 SYSTEMPATH\Model.php(736): CodeIgniter\Database\Exceptions\DataException::forInvalidAllowedFields('App\\Models\\CategoriesModel')
+ 2 SYSTEMPATH\BaseModel.php(763): CodeIgniter\Model->doProtectFieldsForInsert([...])
+ 3 SYSTEMPATH\Model.php(715): CodeIgniter\BaseModel->insert([...], true)
+ 4 APPPATH\Controllers\Categories.php(54): CodeIgniter\Model->insert([...])
+ 5 SYSTEMPATH\CodeIgniter.php(942): App\Controllers\Categories->storeCategory()
+ 6 SYSTEMPATH\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Categories))
+ 7 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 8 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-11-17 23:42:13 --> Allowed fields must be specified for model: "App\Models\CategoriesModel"
+in SYSTEMPATH\Model.php on line 736.
+ 1 SYSTEMPATH\Model.php(736): CodeIgniter\Database\Exceptions\DataException::forInvalidAllowedFields('App\\Models\\CategoriesModel')
+ 2 SYSTEMPATH\BaseModel.php(763): CodeIgniter\Model->doProtectFieldsForInsert([...])
+ 3 SYSTEMPATH\Model.php(715): CodeIgniter\BaseModel->insert([...], true)
+ 4 APPPATH\Controllers\Categories.php(54): CodeIgniter\Model->insert([...])
+ 5 SYSTEMPATH\CodeIgniter.php(942): App\Controllers\Categories->storeCategory()
+ 6 SYSTEMPATH\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Categories))
+ 7 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 8 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-11-17 23:42:18 --> Allowed fields must be specified for model: "App\Models\CategoriesModel"
+in SYSTEMPATH\Model.php on line 736.
+ 1 SYSTEMPATH\Model.php(736): CodeIgniter\Database\Exceptions\DataException::forInvalidAllowedFields('App\\Models\\CategoriesModel')
+ 2 SYSTEMPATH\BaseModel.php(763): CodeIgniter\Model->doProtectFieldsForInsert([...])
+ 3 SYSTEMPATH\Model.php(715): CodeIgniter\BaseModel->insert([...], true)
+ 4 APPPATH\Controllers\Categories.php(54): CodeIgniter\Model->insert([...])
+ 5 SYSTEMPATH\CodeIgniter.php(942): App\Controllers\Categories->storeCategory()
+ 6 SYSTEMPATH\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Categories))
+ 7 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 8 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-11-17 23:45:06 --> Undefined variable $categories
+in APPPATH\Views\Categories\index.php on line 15.
+ 1 APPPATH\Views\Categories\index.php(15): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined variable $categories', 'C:\\xampp\\htdocs\\mynewscover.com\\My_News_Cover_MVC\\app\\Views\\Categories\\index.php', 15)
+ 2 SYSTEMPATH\View\View.php(228): include('C:\\xampp\\htdocs\\mynewscover.com\\My_News_Cover_MVC\\app\\Views\\Categories\\index.php')
+ 3 SYSTEMPATH\View\View.php(231): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH\Common.php(1190): CodeIgniter\View\View->render('Categories/index', [], true)
+ 5 APPPATH\Controllers\Categories.php(62): view('Categories/index', [...])
+ 6 SYSTEMPATH\CodeIgniter.php(942): App\Controllers\Categories->storeCategory()
+ 7 SYSTEMPATH\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Categories))
+ 8 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-11-17 23:49:58 --> Invalid file: "templates/main.php"
+in SYSTEMPATH\Exceptions\FrameworkException.php on line 39.
+ 1 SYSTEMPATH\View\View.php(216): CodeIgniter\Exceptions\FrameworkException::forInvalidFile('templates/main.php')
+ 2 SYSTEMPATH\View\View.php(244): CodeIgniter\View\View->render('templates/main', [], true)
+ 3 SYSTEMPATH\Common.php(1190): CodeIgniter\View\View->render('Categories/index', [], true)
+ 4 APPPATH\Controllers\Categories.php(25): view('Categories/index', [...])
+ 5 SYSTEMPATH\CodeIgniter.php(942): App\Controllers\Categories->index()
+ 6 SYSTEMPATH\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Categories))
+ 7 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 8 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-11-17 23:50:08 --> Invalid file: "templates/main.php"
+in SYSTEMPATH\Exceptions\FrameworkException.php on line 39.
+ 1 SYSTEMPATH\View\View.php(216): CodeIgniter\Exceptions\FrameworkException::forInvalidFile('templates/main.php')
+ 2 SYSTEMPATH\View\View.php(244): CodeIgniter\View\View->render('templates/main', [], true)
+ 3 SYSTEMPATH\Common.php(1190): CodeIgniter\View\View->render('Categories/index', [], true)
+ 4 APPPATH\Controllers\Categories.php(25): view('Categories/index', [...])
+ 5 SYSTEMPATH\CodeIgniter.php(942): App\Controllers\Categories->index()
+ 6 SYSTEMPATH\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Categories))
+ 7 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 8 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-11-17 23:50:36 --> Invalid file: "templates/main.php"
+in SYSTEMPATH\Exceptions\FrameworkException.php on line 39.
+ 1 SYSTEMPATH\View\View.php(216): CodeIgniter\Exceptions\FrameworkException::forInvalidFile('templates/main.php')
+ 2 SYSTEMPATH\View\View.php(244): CodeIgniter\View\View->render('templates/main', [], true)
+ 3 SYSTEMPATH\Common.php(1190): CodeIgniter\View\View->render('Categories/index', [], true)
+ 4 APPPATH\Controllers\Categories.php(25): view('Categories/index', [...])
+ 5 SYSTEMPATH\CodeIgniter.php(942): App\Controllers\Categories->index()
+ 6 SYSTEMPATH\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Categories))
+ 7 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 8 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
