@@ -7,12 +7,13 @@ use CodeIgniter\Router\RouteCollection;
  */
 $routes->get('/', 'Home::index');
 
+//Categories
 $routes->get('categories', 'Categories::index');
 
-$routes->get('categories/add', 'Categories::addCategory');
-$routes->post('categories/store', 'Categories::storeCategory');
+$routes->get('categories/create', 'Categories::create');
+$routes->post('categories/store', 'Categories::store');
 
-$routes->get('categories/edit/(:num)', 'Categories::editCategory/$1');
-$routes->post('categories/update', 'Categories::updateCategory');
+$routes->get('categories/edit/(:num)', 'Categories::edit/$1');
+$routes->post('categories/update', 'Categories::update');
 
-$routes->get('categories/delete/(:num)', 'Categories::deleteCategory/$1');
+$routes->get('categories/delete/(:num)', 'Categories::delete/$1');

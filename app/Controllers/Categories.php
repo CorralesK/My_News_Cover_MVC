@@ -27,11 +27,11 @@ class Categories extends BaseController
      *
      * @return \CodeIgniterHTTP\RedirectResponse Redirects to the add category view.
      */
-    public function addCategory()
+    public function create()
     {
         $data['title'] = 'Agregar Categoría';
 
-        return view('Categories/addCategory', $data);
+        return view('Categories/createCategory', $data);
     }
 
     /**
@@ -39,7 +39,7 @@ class Categories extends BaseController
      *
      * @return \CodeIgniter\HTTP\RedirectResponse Redirects to the category management page.
      */
-    public function storeCategory()
+    public function store()
     {
         $categoriesModel = model(CategoriesModel::class);
 
@@ -61,7 +61,7 @@ class Categories extends BaseController
      * 
      * @return \CodeIgniterRedirectResponse|CodeIgniterRedirectResponse Edit or redirect view with error message.
      */
-    public function editCategory($id = null)
+    public function edit($id = null)
     {
         if ($id === null) {
             return redirect()->to(base_url('categories'))->with('error', 'ID de categoría no proporcionado');
@@ -83,7 +83,7 @@ class Categories extends BaseController
      *
      * @return \CodeIgniterHTTP\RedirectResponse Redirects to the category management page.
      */
-    public function updateCategory()
+    public function update()
     {
         $categoriesModel = model(CategoriesModel::class);
 
@@ -106,7 +106,7 @@ class Categories extends BaseController
      *
      * @return \CodeIgniterHTTP\RedirectResponse Redirects to the category management page.
      */
-    public function deleteCategory($id = null)
+    public function delete($id = null)
     {
         if ($id === null) {
             return redirect()->to(base_url('categories'))->with('error', 'ID de categoría no proporcionado');

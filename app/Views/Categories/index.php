@@ -24,6 +24,6 @@
         </tbody>
     </table>
 
-    <a href="<?= base_url('categories/add'); ?>" type="btn" class="btn btn-primary">Agregar</a>
+    <a href="<?= base_url('categories/create'); ?>" type="btn" class="btn btn-primary">Agregar</a>
 </div>
 <?= $this->endSection() ?>
