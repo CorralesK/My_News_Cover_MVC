@@ -10,10 +10,10 @@ $routes->get('/', 'Home::index');
 //Categories
 $routes->get('categories', 'Categories::index');
 
-$routes->get('categories/create', 'Categories::createCategory');
+$routes->get('categories/create', 'Categories::create');
 $routes->post('categories/store', 'Categories::store');
 
-$routes->get('categories/edit/(:num)', 'Categories::editCategories/$1');
+$routes->get('categories/edit/(:num)', 'Categories::edit/$1');
 $routes->post('categories/update', 'Categories::update');
 
 $routes->get('categories/delete/(:num)', 'Categories::delete/$1');
@@ -21,10 +21,10 @@ $routes->get('categories/delete/(:num)', 'Categories::delete/$1');
 //News Sources
 $routes->get('newsSources', 'NewsSources::index');
 
-$routes->get('newsSources/create', 'NewsSources::createSource');
+$routes->get('newsSources/create', 'NewsSources::create');
 $routes->post('newsSources/store', 'NewsSources::store');
 
-$routes->get('newsSources/edit/(:num)', 'NewsSources::editSource/$1');
+$routes->get('newsSources/edit/(:num)', 'NewsSources::edit/$1');
 $routes->post('newsSources/update', 'NewsSources::update');
 
 $routes->get('newsSources/delete/(:num)', 'NewsSources::delete/$1');
