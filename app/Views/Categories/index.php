@@ -16,14 +16,14 @@
                 <tr>
                     <td><?= esc($category['name']); ?></td>
                     <td>
-                        <a class="link-warning text-decoration-none" href="<?= base_url("categories/edit/{$category['id']}"); ?>">Editar</a> |
-                        <a class="link-danger text-decoration-none" href="<?= base_url("categories/delete/{$category['id']}"); ?>" onclick="return confirm('¿Seguro que deseas eliminar a <?= esc($category['name']); ?>?');">Eliminar</a>
+                        <a class="link-warning text-decoration-none" href="<?php echo base_url("categories/edit/{$category['id']}"); ?>">Editar</a> |
+                        <a class="link-danger text-decoration-none" href="<?php echo base_url("categories/delete/{$category['id']}"); ?>" onclick="return confirm('¿Seguro que deseas eliminar a <?= esc($category['name']); ?>?');">Eliminar</a>
                     </td>
                 </tr>
             <?php endforeach; ?>
         </tbody>
     </table>
 
-    <a href="<?= base_url('categories/create'); ?>" type="btn" class="btn btn-primary">Agregar</a>
+    <a href="<?php echo site_url('categories/create'); ?>" type="btn" class="btn btn-primary">Agregar</a>
 </div>
 <?= $this->endSection() ?>

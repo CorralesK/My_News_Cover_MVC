@@ -15,7 +15,7 @@
         </div>
 
         <button type="submit" class="btn btn-primary">Guardar</button>
-        <a href="<?= base_url('categories'); ?>" type="btn" class="btn btn-secondary">Cancelar</a>
+        <a href="<?php echo base_url('categories'); ?>" type="btn" class="btn btn-secondary">Cancelar</a>
     </form>
 </div>
 <?= $this->endSection() ?>
