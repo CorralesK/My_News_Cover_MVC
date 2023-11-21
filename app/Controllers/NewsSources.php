@@ -84,8 +84,6 @@ class NewsSources extends BaseController
         $categoriesModel = model(CategoriesModel::class);
 
         $data['source'] = $newsSourcesModel->find($id);
-        $data['source']['categoryName'] = $categoriesModel->find($data['source']['categoryId'])['name'];
-
         $data['categories'] = $categoriesModel->orderBy('name', 'ASC')->findAll();
 
         if ($data['source'] === null) {
@@ -105,8 +103,7 @@ class NewsSources extends BaseController
         $sourceId = $this->request->getPost('id');
         $sourceData['url'] = $this->request->getPost('url');
         $sourceData['name'] = $this->request->getPost('name');
-        $sourceData['categoryId'] = $this->request->getPost('categoryId');
-        $sourceData['userId'] = $this->request->getPost('userId');
+        $sourceData['categoryId'] = $this->request->getPost('category');
 
         $newsSourcesModel = model(NewsSourcesModel::class);
         if ($newsSourcesModel->update($sourceId, $sourceData)) {
