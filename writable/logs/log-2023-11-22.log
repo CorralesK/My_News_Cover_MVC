@@ -1,0 +1,83 @@
+ERROR - 2023-11-22 00:44:04 --> mysqli_sql_exception: Table 'mynewscover.news_sources' doesn't exist in C:\xampp\htdocs\mynewscover.com\My_News_Cover_MVC\system\Database\MySQLi\Connection.php:306
+Stack trace:
+#0 C:\xampp\htdocs\mynewscover.com\My_News_Cover_MVC\system\Database\MySQLi\Connection.php(306): mysqli->query('DELETE FROM `ca...', 0)
+#1 C:\xampp\htdocs\mynewscover.com\My_News_Cover_MVC\system\Database\BaseConnection.php(693): CodeIgniter\Database\MySQLi\Connection->execute('DELETE FROM `ca...')
+#2 C:\xampp\htdocs\mynewscover.com\My_News_Cover_MVC\system\Database\BaseConnection.php(607): CodeIgniter\Database\BaseConnection->simpleQuery('DELETE FROM `ca...')
+#3 C:\xampp\htdocs\mynewscover.com\My_News_Cover_MVC\system\Database\BaseBuilder.php(2790): CodeIgniter\Database\BaseConnection->query('DELETE FROM `ca...', Array, false)
+#4 C:\xampp\htdocs\mynewscover.com\My_News_Cover_MVC\system\Model.php(445): CodeIgniter\Database\BaseBuilder->delete()
+#5 C:\xampp\htdocs\mynewscover.com\My_News_Cover_MVC\system\BaseModel.php(1080): CodeIgniter\Model->doDelete(NULL, false)
+#6 C:\xampp\htdocs\mynewscover.com\My_News_Cover_MVC\app\Controllers\Categories.php(118): CodeIgniter\BaseModel->delete()
+#7 C:\xampp\htdocs\mynewscover.com\My_News_Cover_MVC\system\CodeIgniter.php(942): App\Controllers\Categories->delete('14')
+#8 C:\xampp\htdocs\mynewscover.com\My_News_Cover_MVC\system\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Categories))
+#9 C:\xampp\htdocs\mynewscover.com\My_News_Cover_MVC\system\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#10 C:\xampp\htdocs\mynewscover.com\My_News_Cover_MVC\public\index.php(79): CodeIgniter\CodeIgniter->run()
+#11 {main}
+CRITICAL - 2023-11-22 00:44:04 --> Table 'mynewscover.news_sources' doesn't exist
+in SYSTEMPATH\Database\BaseConnection.php on line 647.
+ 1 SYSTEMPATH\Database\BaseBuilder.php(2790): CodeIgniter\Database\BaseConnection->query('DELETE FROM `categories`
+WHERE `id` = :id:
+AND `id` NOT IN :id.1:', [...], false)
+ 2 SYSTEMPATH\Model.php(445): CodeIgniter\Database\BaseBuilder->delete()
+ 3 SYSTEMPATH\BaseModel.php(1080): CodeIgniter\Model->doDelete(null, false)
+ 4 APPPATH\Controllers\Categories.php(118): CodeIgniter\BaseModel->delete()
+ 5 SYSTEMPATH\CodeIgniter.php(942): App\Controllers\Categories->delete('14')
+ 6 SYSTEMPATH\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Categories))
+ 7 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 8 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+ERROR - 2023-11-22 00:55:05 --> mysqli_sql_exception: Cannot delete or update a parent row: a foreign key constraint fails (`mynewscover`.`newssources`, CONSTRAINT `category_fk` FOREIGN KEY (`categoryId`) REFERENCES `categories` (`id`)) in C:\xampp\htdocs\mynewscover.com\My_News_Cover_MVC\system\Database\MySQLi\Connection.php:306
+Stack trace:
+#0 C:\xampp\htdocs\mynewscover.com\My_News_Cover_MVC\system\Database\MySQLi\Connection.php(306): mysqli->query('DELETE FROM `ca...', 0)
+#1 C:\xampp\htdocs\mynewscover.com\My_News_Cover_MVC\system\Database\BaseConnection.php(693): CodeIgniter\Database\MySQLi\Connection->execute('DELETE FROM `ca...')
+#2 C:\xampp\htdocs\mynewscover.com\My_News_Cover_MVC\system\Database\BaseConnection.php(607): CodeIgniter\Database\BaseConnection->simpleQuery('DELETE FROM `ca...')
+#3 C:\xampp\htdocs\mynewscover.com\My_News_Cover_MVC\system\Database\BaseBuilder.php(2790): CodeIgniter\Database\BaseConnection->query('DELETE FROM `ca...', Array, false)
+#4 C:\xampp\htdocs\mynewscover.com\My_News_Cover_MVC\system\Model.php(445): CodeIgniter\Database\BaseBuilder->delete()
+#5 C:\xampp\htdocs\mynewscover.com\My_News_Cover_MVC\system\BaseModel.php(1080): CodeIgniter\Model->doDelete(NULL, false)
+#6 C:\xampp\htdocs\mynewscover.com\My_News_Cover_MVC\app\Controllers\Categories.php(116): CodeIgniter\BaseModel->delete()
+#7 C:\xampp\htdocs\mynewscover.com\My_News_Cover_MVC\system\CodeIgniter.php(942): App\Controllers\Categories->delete('9')
+#8 C:\xampp\htdocs\mynewscover.com\My_News_Cover_MVC\system\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Categories))
+#9 C:\xampp\htdocs\mynewscover.com\My_News_Cover_MVC\system\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#10 C:\xampp\htdocs\mynewscover.com\My_News_Cover_MVC\public\index.php(79): CodeIgniter\CodeIgniter->run()
+#11 {main}
+CRITICAL - 2023-11-22 00:55:05 --> Cannot delete or update a parent row: a foreign key constraint fails (`mynewscover`.`newssources`, CONSTRAINT `category_fk` FOREIGN KEY (`categoryId`) REFERENCES `categories` (`id`))
+in SYSTEMPATH\Database\BaseConnection.php on line 647.
+ 1 SYSTEMPATH\Database\BaseBuilder.php(2790): CodeIgniter\Database\BaseConnection->query('DELETE FROM `categories`
+WHERE `id` = :id:', [...], false)
+ 2 SYSTEMPATH\Model.php(445): CodeIgniter\Database\BaseBuilder->delete()
+ 3 SYSTEMPATH\BaseModel.php(1080): CodeIgniter\Model->doDelete(null, false)
+ 4 APPPATH\Controllers\Categories.php(116): CodeIgniter\BaseModel->delete()
+ 5 SYSTEMPATH\CodeIgniter.php(942): App\Controllers\Categories->delete('9')
+ 6 SYSTEMPATH\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Categories))
+ 7 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 8 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-11-22 00:55:28 --> Undefined variable $newsSourcesModel
+in APPPATH\Controllers\Categories.php on line 116.
+ 1 APPPATH\Controllers\Categories.php(116): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined variable $newsSourcesModel', 'C:\\xampp\\htdocs\\mynewscover.com\\My_News_Cover_MVC\\app\\Controllers\\Categories.php', 116)
+ 2 SYSTEMPATH\CodeIgniter.php(942): App\Controllers\Categories->delete('9')
+ 3 SYSTEMPATH\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Categories))
+ 4 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+ERROR - 2023-11-22 00:56:36 --> mysqli_sql_exception: Cannot delete or update a parent row: a foreign key constraint fails (`mynewscover`.`newssources`, CONSTRAINT `category_fk` FOREIGN KEY (`categoryId`) REFERENCES `categories` (`id`)) in C:\xampp\htdocs\mynewscover.com\My_News_Cover_MVC\system\Database\MySQLi\Connection.php:306
+Stack trace:
+#0 C:\xampp\htdocs\mynewscover.com\My_News_Cover_MVC\system\Database\MySQLi\Connection.php(306): mysqli->query('DELETE FROM `ca...', 0)
+#1 C:\xampp\htdocs\mynewscover.com\My_News_Cover_MVC\system\Database\BaseConnection.php(693): CodeIgniter\Database\MySQLi\Connection->execute('DELETE FROM `ca...')
+#2 C:\xampp\htdocs\mynewscover.com\My_News_Cover_MVC\system\Database\BaseConnection.php(607): CodeIgniter\Database\BaseConnection->simpleQuery('DELETE FROM `ca...')
+#3 C:\xampp\htdocs\mynewscover.com\My_News_Cover_MVC\system\Database\BaseBuilder.php(2790): CodeIgniter\Database\BaseConnection->query('DELETE FROM `ca...', Array, false)
+#4 C:\xampp\htdocs\mynewscover.com\My_News_Cover_MVC\system\Model.php(445): CodeIgniter\Database\BaseBuilder->delete()
+#5 C:\xampp\htdocs\mynewscover.com\My_News_Cover_MVC\system\BaseModel.php(1080): CodeIgniter\Model->doDelete(NULL, false)
+#6 C:\xampp\htdocs\mynewscover.com\My_News_Cover_MVC\app\Controllers\Categories.php(116): CodeIgniter\BaseModel->delete()
+#7 C:\xampp\htdocs\mynewscover.com\My_News_Cover_MVC\system\CodeIgniter.php(942): App\Controllers\Categories->delete('9')
+#8 C:\xampp\htdocs\mynewscover.com\My_News_Cover_MVC\system\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Categories))
+#9 C:\xampp\htdocs\mynewscover.com\My_News_Cover_MVC\system\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#10 C:\xampp\htdocs\mynewscover.com\My_News_Cover_MVC\public\index.php(79): CodeIgniter\CodeIgniter->run()
+#11 {main}
+CRITICAL - 2023-11-22 00:56:36 --> Cannot delete or update a parent row: a foreign key constraint fails (`mynewscover`.`newssources`, CONSTRAINT `category_fk` FOREIGN KEY (`categoryId`) REFERENCES `categories` (`id`))
+in SYSTEMPATH\Database\BaseConnection.php on line 647.
+ 1 SYSTEMPATH\Database\BaseBuilder.php(2790): CodeIgniter\Database\BaseConnection->query('DELETE FROM `categories`
+WHERE `id` = :id:', [...], false)
+ 2 SYSTEMPATH\Model.php(445): CodeIgniter\Database\BaseBuilder->delete()
+ 3 SYSTEMPATH\BaseModel.php(1080): CodeIgniter\Model->doDelete(null, false)
+ 4 APPPATH\Controllers\Categories.php(116): CodeIgniter\BaseModel->delete()
+ 5 SYSTEMPATH\CodeIgniter.php(942): App\Controllers\Categories->delete('9')
+ 6 SYSTEMPATH\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Categories))
+ 7 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 8 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
