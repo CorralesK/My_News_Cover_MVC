@@ -58,7 +58,7 @@ class Categories extends BaseController
      * Method to display the form to edit a specific category.
      *
      * @param int|null $id The ID of the category to edit.
-     * 
+     *
      * @return \CodeIgniterRedirectResponse|CodeIgniterRedirectResponse Edit or redirect view with error message.
      */
     public function edit($id = null)
@@ -112,8 +112,12 @@ class Categories extends BaseController
             return redirect()->to(base_url('categories'))->with('error', 'ID de categoría no proporcionado');
         }
         $categoriesModel = model(CategoriesModel::class);
-        $categoriesModel->delete($id);
-
-        return redirect()->to(base_url('categories'))->with('message', 'Categoría eliminada exitosamente');
+        
+        if ($categoriesModel->where('id', $id)->delete()) {
+            $message = "Categoría eliminada exitosamente.";
+        } else {
+            $message = "Se ha producido un error al eliminar la categoría. Vuelva a intentarlo más tarde.";
+        }
+        return redirect()->to(base_url('categories'))->with('message', $message);
     }
 }
