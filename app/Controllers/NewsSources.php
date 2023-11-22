@@ -3,8 +3,8 @@
 namespace App\Controllers;
 
 use App\Controllers\BaseController;
-use App\Models\NewsSourcesModel;
 use App\Models\CategoriesModel;
+use App\Models\NewsSourcesModel;
 
 class NewsSources extends BaseController
 {
@@ -51,11 +51,12 @@ class NewsSources extends BaseController
     public function store()
     {
         $newsSourcesModel = model(NewsSourcesModel::class);
+        $session = session();
 
         $source['url'] = $this->request->getPost('url');
         $source['name'] = $this->request->getPost('name');
         $source['categoryId'] = $this->request->getPost('category');
-        $source['userId'] = $this->request->getPost('userId');
+        $source['userId'] = $session->get('user')['id'];
 
         if ($newsSourcesModel->insert($source)) {
             $message = "La fuente se ha guardado correctamente.";
@@ -70,7 +71,7 @@ class NewsSources extends BaseController
      * Method to display the form to edit a specific news source.
      *
      * @param int|null $id The ID of the news source to edit.
-     * 
+     *
      * @return \CodeIgniterRedirectResponse|CodeIgniterRedirectResponse Edit or redirect view with error message.
      */
     public function edit($id = null)
@@ -96,17 +97,18 @@ class NewsSources extends BaseController
     /**
      * Method to update the information of an existing news source.
      *
+     * @param int|null $id The ID of the news source to edit.
+     *
      * @return \CodeIgniterHTTP\RedirectResponse Redirects to the news source management page.
      */
-    public function update()
+    public function update($id = null)
     {
-        $sourceId = $this->request->getPost('id');
         $sourceData['url'] = $this->request->getPost('url');
         $sourceData['name'] = $this->request->getPost('name');
         $sourceData['categoryId'] = $this->request->getPost('category');
 
         $newsSourcesModel = model(NewsSourcesModel::class);
-        if ($newsSourcesModel->update($sourceId, $sourceData)) {
+        if ($newsSourcesModel->update($id, $sourceData)) {
             $message = "La Fuente de Noticias se ha actualizado correctamente.";
         } else {
             $message = "Se ha producido un error al actualizar la Fuente de Noticias. Vuelva a intentarlo más tarde.";
@@ -128,8 +130,11 @@ class NewsSources extends BaseController
             return redirect()->to(base_url('newsSources'))->with('error', 'ID de Fuente de Noticias no proporcionado');
         }
         $newsSourcesModel = model(NewsSourcesModel::class);
-        $newsSourcesModel->delete($id);
-
-        return redirect()->to(base_url('newsSources'))->with('message', 'Fuente de Noticias eliminada exitosamente');
+        if ($newsSourcesModel->where('id', $id)->delete()) {
+            $message = "Fuente de Noticias eliminada exitosamente";
+        } else {
+            $message = "Se ha producido un error al eliminar la Fuente de Noticias. Vuelva a intentarlo más tarde.";
+        }
+        return redirect()->to(base_url('newsSources'))->with('message', $message);
     }
 }
