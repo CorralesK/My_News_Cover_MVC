@@ -40,7 +40,7 @@ class Users extends BaseController
             $session = session();
             $session->set('user', $user);
 
-            $redirectURL = ($user['roleId'] == 1) ? 'categories' : '/';
+            $redirectURL = ($user['roleId'] == 1) ? 'categories' : 'home';
             return redirect()->to(base_url($redirectURL));
 
         } else {
@@ -85,7 +85,7 @@ class Users extends BaseController
                 $session = session();
                 $session->set('user', $userModel->find($userId));
 
-                return redirect()->to(base_url('/'));
+                return redirect()->to(base_url('home'));
             } else {
                 return redirect()->to(base_url('login'));
             }
