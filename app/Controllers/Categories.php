@@ -14,10 +14,12 @@ class Categories extends BaseController
      */
     public function index()
     {
-        $data['title'] = 'Categorias de Noticias';
-
         $categoriesModel = model(CategoriesModel::class);
-        $data['categories'] = $categoriesModel->orderBy('name', 'ASC')->findAll();
+
+        $data = [
+            'title'         => 'Categorias de Noticias',
+            'categories'    => $categoriesModel->getCategories(),
+        ];
 
         return view('Categories/index', $data);
     }
@@ -47,6 +49,7 @@ class Categories extends BaseController
 
         if ($categoriesModel->insert($category)) {
             $message = "La categoría se ha guardado correctamente.";
+
         } else {
             $message = "Se ha producido un error al guardar la categoría. Vuelva a intentarlo más tarde.";
         }
@@ -66,10 +69,12 @@ class Categories extends BaseController
         if ($id === null) {
             return redirect()->to(base_url('categories'))->with('message', 'ID de categoría no proporcionado');
         }
-        $data['title'] = 'Editar Categoría';
-
         $categoriesModel = model(CategoriesModel::class);
-        $data['category'] = $categoriesModel->find($id);
+
+        $data = [
+            'title'         => 'Editar Categoría',
+            'categories'    => $categoriesModel->find($id),
+        ];
 
         if ($data['category'] === null) {
             return redirect()->to(base_url('categories'))->with('message', 'Categoría no encontrada');
@@ -92,6 +97,7 @@ class Categories extends BaseController
 
         if ($categoriesModel->update($categoryId, $categoryData)) {
             $message = "La categoría se ha actualizado correctamente.";
+            
         } else {
             $message = "Se ha producido un error al actualizar la categoría. Vuelva a intentarlo más tarde.";
         }
