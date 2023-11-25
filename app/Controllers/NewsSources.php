@@ -77,7 +77,7 @@ class NewsSources extends BaseController
     public function edit($id = null)
     {
         if ($id === null) {
-            return redirect()->to(base_url('newsSources'))->with('error', 'ID de Fuente no proporcionado');
+            return redirect()->to(base_url('newsSources'))->with('message', 'ID de Fuente no proporcionado');
         }
         $data['title'] = 'Editar Fuente de Noticias';
 
@@ -88,7 +88,7 @@ class NewsSources extends BaseController
         $data['categories'] = $categoriesModel->orderBy('name', 'ASC')->findAll();
 
         if ($data['source'] === null) {
-            return redirect()->to(base_url('newsSources'))->with('error', 'Fuente de Noticias no encontrada');
+            return redirect()->to(base_url('newsSources'))->with('message', 'Fuente de Noticias no encontrada');
         }
 
         return view('Users/NewsSources/editSource', $data);
@@ -127,7 +127,7 @@ class NewsSources extends BaseController
     public function delete($id = null)
     {
         if ($id === null) {
-            return redirect()->to(base_url('newsSources'))->with('error', 'ID de Fuente de Noticias no proporcionado');
+            return redirect()->to(base_url('newsSources'))->with('message', 'ID de Fuente de Noticias no proporcionado');
         }
         $newsSourcesModel = model(NewsSourcesModel::class);
         if ($newsSourcesModel->where('id', $id)->delete()) {
