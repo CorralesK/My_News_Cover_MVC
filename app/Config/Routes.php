@@ -6,6 +6,10 @@ use CodeIgniter\Router\RouteCollection;
  * @var RouteCollection $routes
  */
 
+ //My Cover
+ $routes->get('home', 'News::index');
+ $routes->get('home/(:num)', 'News::showBYCategory/$1');
+
  //Users
 $routes->get('login', 'Users::index');
 $routes->post('auth/login', 'Users::login');
