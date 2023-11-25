@@ -16,7 +16,7 @@ class Users extends BaseController
     {
         $session = session();
         $session->destroy();
-        
+
         $data['title'] = 'Login';
 
         return view('Auth/index', $data);
@@ -40,7 +40,7 @@ class Users extends BaseController
             $session = session();
             $session->set('user', $user);
 
-            $redirectURL = ($user['roleId'] == 1) ? 'categories' : 'mycover';
+            $redirectURL = ($user['roleId'] == 1) ? 'categories' : '/';
             return redirect()->to(base_url($redirectURL));
 
         } else {
@@ -71,25 +71,26 @@ class Users extends BaseController
         $userModel = model(UsersModel::class);
 
         $user = [
-            'first_name' => $this->request->getPost('firstName'),
-            'last_name' => $this->request->getPost('lastName'),
+            'firstName' => $this->request->getPost('firstName'),
+            'lastName' => $this->request->getPost('lastName'),
             'email' => $this->request->getPost('email'),
             'password' => password_hash($this->request->getPost('password'), PASSWORD_BCRYPT),
-            'address' => $this->request->getPost('address'),
-            'country' => $this->request->getPost('country'),
-            'city' => $this->request->getPost('city'),
+            'roleId' => 2,
         ];
 
-        $userId = $userModel->insert($user);
+        if ($this->sendEmail($user)) {
+            $userId = $userModel->insert($user);
 
-        if ($userId) {
-            $session = session();
-            $session->set('user', $userModel->find($userId));
+            if ($userId) {
+                $session = session();
+                $session->set('user', $userModel->find($userId));
 
-            return redirect()->to(base_url('mycover'));
-        } else {
-            return redirect()->to(base_url('login'));
+                return redirect()->to(base_url('/'));
+            } else {
+                return redirect()->to(base_url('login'));
+            }
         }
+        return redirect()->to(base_url('signup'));
     }
 
     /**
@@ -103,5 +104,27 @@ class Users extends BaseController
         $session->destroy();
 
         return redirect()->to(base_url('login'));
+    }
+
+    /**
+     * Method to log out the user.
+     *
+     * @return \CodeIgniterHTTP\RedirectResponse Redirects to the login page.
+     */
+    public function sendEmail($user)
+    {
+        $email = \Config\Services::email();
+
+        $email->setTo($user['email']);
+        $email->setFrom('mycorver@gmail.com', 'My Corver');
+        $email->setSubject('Confirmación de Registro');
+        $email->setMessage('Hola ' . $user['firstName'] . ' ' . $user['lastName'] . ',
+
+Gracias por registrarte en nuestro sitio. Este es un correo electrónico de prueba para fines ilustrativos.
+
+Atentamente,
+My News Cover');
+
+        return $email->send();
     }
 }
