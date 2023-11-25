@@ -35,8 +35,20 @@ class CategoriesModel extends Model
     protected $afterUpdate    = [];
     protected $beforeFind     = [];
     protected $afterFind      = [];
-    protected $beforeDelete   = [];
+    protected $beforeDelete   = ['checkAssoc'];
     protected $afterDelete    = [];
 
     public function initialize() {}
+
+    protected function checkAssoc(array $data)
+    {
+        $categoryID = $data['id'];
+        $sourcesModel = model(NewsSourcesModel::class);
+        $assocSources = $sourcesModel->where('categoryId', $categoryID)->find();
+
+        if (!empty($assocSources)) {
+            throw new \Exception("No se puede eliminar la categoría porque está asociada a fuentes de noticias.");
+        }
+        return $data;
+    }
 }

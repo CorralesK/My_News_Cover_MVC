@@ -64,7 +64,7 @@ class Categories extends BaseController
     public function edit($id = null)
     {
         if ($id === null) {
-            return redirect()->to(base_url('categories'))->with('error', 'ID de categoría no proporcionado');
+            return redirect()->to(base_url('categories'))->with('message', 'ID de categoría no proporcionado');
         }
         $data['title'] = 'Editar Categoría';
 
@@ -72,7 +72,7 @@ class Categories extends BaseController
         $data['category'] = $categoriesModel->find($id);
 
         if ($data['category'] === null) {
-            return redirect()->to(base_url('categories'))->with('error', 'Categoría no encontrada');
+            return redirect()->to(base_url('categories'))->with('message', 'Categoría no encontrada');
         }
 
         return view('categories/editCategory', $data);
@@ -109,15 +109,16 @@ class Categories extends BaseController
     public function delete($id = null)
     {
         if ($id === null) {
-            return redirect()->to(base_url('categories'))->with('error', 'ID de categoría no proporcionado');
+            return redirect()->to(base_url('categories'))->with('message', 'ID de categoría no proporcionado');
         }
         $categoriesModel = model(CategoriesModel::class);
         
-        if ($categoriesModel->where('id', $id)->delete()) {
-            $message = "Categoría eliminada exitosamente.";
-        } else {
-            $message = "Se ha producido un error al eliminar la categoría. Vuelva a intentarlo más tarde.";
+        try {
+            $categoriesModel->delete($id);
+            return redirect()->to(base_url('categories'))->with('message', 'Categoría eliminada exitosamente.');
+
+        } catch (\Exception $e) {
+            return redirect()->to(base_url('categories'))->with('message', $e->getMessage());
         }
-        return redirect()->to(base_url('categories'))->with('message', $message);
     }
 }
