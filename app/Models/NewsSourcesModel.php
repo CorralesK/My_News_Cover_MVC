@@ -35,8 +35,41 @@ class NewsSources extends Model
     protected $afterUpdate    = [];
     protected $beforeFind     = [];
     protected $afterFind      = [];
-    protected $beforeDelete   = [];
+    protected $beforeDelete   = ['deleteNews'];
     protected $afterDelete    = [];
 
     public function initialize() {}
+
+    /**
+     * Get news sources by user
+     *
+     * @param int $userId User ID
+     * @return array News sources associated with the user
+     */
+    public function getByUser($userId)
+    {
+        $categoriesModel = new CategoriesModel();
+
+        $sources = $this->where('userId', $userId)->findAll();
+
+        foreach ($sources as &$source) {
+            $source['categoryName'] = $categoriesModel->find($source['categoryId'])['name'];
+        }
+
+        return $sources;
+    }
+
+    /**
+     * Callback to delete news related to a specific news source from the database
+     *
+     * @param array $data Data containing the news source id
+     * @return bool Returns true if the news items were successfully deleted, or false in case of an error.
+     */
+    protected function deleteNews(array $data)
+    {
+        $sourceId = $data['id'];
+        $newsModel = model(NewsModel::class);
+
+        return $newsModel->where('newsSourceId', $sourceId)->delete();
+    }
 }
