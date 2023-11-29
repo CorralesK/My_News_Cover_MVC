@@ -9,8 +9,10 @@ use CodeIgniter\Router\RouteCollection;
  //My Cover
  $routes->get('home', 'News::index');
  $routes->get('home/(:num)', 'News::showBYCategory/$1');
+ $routes->get('home/search', 'News::search');
 
  //Users
+ $routes->get('/', 'Users::index');
 $routes->get('login', 'Users::index');
 $routes->post('auth/login', 'Users::login');
 
