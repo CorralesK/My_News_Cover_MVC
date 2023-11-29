@@ -29,23 +29,28 @@ class Users extends BaseController
      */
     public function login()
     {
-        $email = $this->request->getPost('email');
-        $password = $this->request->getPost('password');
+        $validationRules = [
+            'email' => 'required|valid_email',
+            'password' => 'required|min_length[8]',
+        ];
 
-        $userModel = model(UsersModel::class);
+        if ($this->validate($validationRules)) {
+            $email = $this->request->getPost('email');
+            $password = $this->request->getPost('password');
 
-        $user = $userModel->where('email', $email)->first();
+            $userModel = model(UsersModel::class);
 
-        if ($user && password_verify($password, $user['password'])) {
-            $session = session();
-            $session->set('user', $user);
+            $user = $userModel->where('email', $email)->first();
 
-            $redirectURL = ($user['roleId'] == 1) ? 'categories' : 'home';
-            return redirect()->to(base_url($redirectURL));
+            if ($user && password_verify($password, $user['password'])) {
+                $session = session();
+                $session->set('user', $user);
 
-        } else {
-            return redirect()->to(base_url('signup'));
+                $redirectURL = ($user['roleId'] == 1) ? 'categories' : 'home';
+                return redirect()->to(base_url($redirectURL));
+            }
         }
+        return redirect()->to(base_url('login'))->with('error', 'Correo o contraseña incorrectos');
     }
 
     /**
@@ -70,6 +75,12 @@ class Users extends BaseController
     {
         $userModel = model(UsersModel::class);
 
+        $existingUser = $userModel->where('email', $this->request->getPost('email'))->first();
+
+        if ($existingUser) {
+            return redirect()->to(base_url('signup'))->with('error', 'El usuario ya existe');
+        }
+
         $user = [
             'firstName' => $this->request->getPost('firstName'),
             'lastName' => $this->request->getPost('lastName'),
@@ -86,11 +97,9 @@ class Users extends BaseController
                 $session->set('user', $userModel->find($userId));
 
                 return redirect()->to(base_url('home'));
-            } else {
-                return redirect()->to(base_url('login'));
             }
         }
-        return redirect()->to(base_url('signup'));
+        return redirect()->to(base_url('signup'))->with('error', 'Se ha producido un error al registrar el usuario. Vuelva a intentarlo.');
     }
 
     /**

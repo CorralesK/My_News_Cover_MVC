@@ -48,13 +48,9 @@ class Categories extends BaseController
         $category['name'] = $this->request->getPost('name');
 
         if ($categoriesModel->insert($category)) {
-            $message = "La categoría se ha guardado correctamente.";
-
-        } else {
-            $message = "Se ha producido un error al guardar la categoría. Vuelva a intentarlo más tarde.";
+            return redirect()->to(base_url('categories'))->with('success', "La categoría se ha guardado correctamente.");
         }
-
-        return redirect()->to(base_url('categories'))->with('message', $message);
+        return redirect()->to(base_url('categories'))->with('error', "Se ha producido un error al guardar la categoría. Vuelva a intentarlo más tarde.");
     }
 
     /**
@@ -62,12 +58,12 @@ class Categories extends BaseController
      *
      * @param int|null $id The ID of the category to edit.
      *
-     * @return \CodeIgniterRedirectResponse|CodeIgniterRedirectResponse Edit or redirect view with error message.
+     * @return \CodeIgniterRedirectResponse|CodeIgniterRedirectResponse Edit or redirect view with error success.
      */
     public function edit($id = null)
     {
         if ($id === null) {
-            return redirect()->to(base_url('categories'))->with('message', 'ID de categoría no proporcionado');
+            return redirect()->to(base_url('categories'))->with('error', 'ID de categoría no proporcionado');
         }
         $categoriesModel = model(CategoriesModel::class);
 
@@ -77,7 +73,7 @@ class Categories extends BaseController
         ];
 
         if ($data['category'] === null) {
-            return redirect()->to(base_url('categories'))->with('message', 'Categoría no encontrada');
+            return redirect()->to(base_url('categories'))->with('error', 'Categoría no encontrada');
         }
 
         return view('categories/editCategory', $data);
@@ -96,13 +92,9 @@ class Categories extends BaseController
         $categoryData['name'] = $this->request->getPost('name');
 
         if ($categoriesModel->update($categoryId, $categoryData)) {
-            $message = "La categoría se ha actualizado correctamente.";
-            
-        } else {
-            $message = "Se ha producido un error al actualizar la categoría. Vuelva a intentarlo más tarde.";
+            return redirect()->to(base_url('categories'))->with('success', "La categoría se ha actualizado correctamente.");
         }
-
-        return redirect()->to(base_url('categories'))->with('message', $message);
+        return redirect()->to(base_url('categories'))->with('error', "Se ha producido un error al actualizar la categoría. Vuelva a intentarlo más tarde.");
     }
 
     /**
@@ -115,16 +107,16 @@ class Categories extends BaseController
     public function delete($id = null)
     {
         if ($id === null) {
-            return redirect()->to(base_url('categories'))->with('message', 'ID de categoría no proporcionado');
+            return redirect()->to(base_url('categories'))->with('error', 'ID de categoría no proporcionado');
         }
         $categoriesModel = model(CategoriesModel::class);
         
         try {
             $categoriesModel->delete($id);
-            return redirect()->to(base_url('categories'))->with('message', 'Categoría eliminada exitosamente.');
+            return redirect()->to(base_url('categories'))->with('success', 'Categoría eliminada exitosamente.');
 
         } catch (\Exception $e) {
-            return redirect()->to(base_url('categories'))->with('message', $e->getMessage());
+            return redirect()->to(base_url('categories'))->with('error', $e->getsuccess());
         }
     }
 }

@@ -61,14 +61,12 @@ class NewsSources extends BaseController
             'userId'        => $session->get('user')['id'],
         ];
 
+        updateNews();
+
         if ($newsSourcesModel->insert($source)) {
-            $message = "La fuente se ha guardado correctamente.";
-
-        } else {
-            $message = "Se ha producido un error al guardar la fuente. Vuelva a intentarlo más tarde.";
+            return redirect()->to(base_url('newsSources'))->with('success', "La fuente se ha guardado correctamente.");
         }
-
-        return redirect()->to(base_url('newsSources'))->with('message', $message);
+        return redirect()->to(base_url('newsSources'))->with('error', "Se ha producido un error al guardar la fuente. Vuelva a intentarlo más tarde.");
     }
 
     /**
@@ -76,12 +74,12 @@ class NewsSources extends BaseController
      *
      * @param int|null $id The ID of the news source to edit.
      *
-     * @return \CodeIgniterRedirectResponse|CodeIgniterRedirectResponse Edit or redirect view with error message.
+     * @return \CodeIgniterRedirectResponse|CodeIgniterRedirectResponse Edit or redirect view with error success.
      */
     public function edit($id = null)
     {
         if ($id === null) {
-            return redirect()->to(base_url('newsSources'))->with('message', 'ID de Fuente no proporcionado');
+            return redirect()->to(base_url('newsSources'))->with('error', 'ID de Fuente no proporcionado');
         }
 
         $newsSourcesModel = model(NewsSourcesModel::class);
@@ -94,9 +92,8 @@ class NewsSources extends BaseController
         ];
 
         if ($data['source'] === null) {
-            return redirect()->to(base_url('newsSources'))->with('message', 'Fuente de Noticias no encontrada');
+            return redirect()->to(base_url('newsSources'))->with('error', 'Fuente de Noticias no encontrada');
         }
-
         return view('Users/NewsSources/editSource', $data);
     }
 
@@ -118,13 +115,9 @@ class NewsSources extends BaseController
         $newsSourcesModel = model(NewsSourcesModel::class);
 
         if ($newsSourcesModel->update($id, $sourceData)) {
-            $message = "La Fuente de Noticias se ha actualizado correctamente.";
-
-        } else {
-            $message = "Se ha producido un error al actualizar la Fuente de Noticias. Vuelva a intentarlo más tarde.";
+            return redirect()->to(base_url('newsSources'))->with('success', "La Fuente de Noticias se ha actualizado correctamente.");
         }
-
-        return redirect()->to(base_url('newsSources'))->with('message', $message);
+        return redirect()->to(base_url('newsSources'))->with('error', "Se ha producido un error al actualizar la Fuente de Noticias. Vuelva a intentarlo más tarde.");
     }
 
     /**
@@ -137,17 +130,23 @@ class NewsSources extends BaseController
     public function delete($id = null)
     {
         if ($id === null) {
-            return redirect()->to(base_url('newsSources'))->with('message', 'ID de Fuente de Noticias no proporcionado');
+            return redirect()->to(base_url('newsSources'))->with('error', 'ID de Fuente de Noticias no proporcionado');
         }
 
         $newsSourcesModel = model(NewsSourcesModel::class);
 
         if ($newsSourcesModel->delete($id)) {
-            $message = "Fuente de Noticias eliminada exitosamente";
-
-        } else {
-            $message = "Se ha producido un error al eliminar la Fuente de Noticias. Vuelva a intentarlo más tarde.";
+            return redirect()->to(base_url('newsSources'))->with('success', "Fuente de Noticias eliminada exitosamente");
         }
-        return redirect()->to(base_url('newsSources'))->with('message', $message);
+        return redirect()->to(base_url('newsSources'))->with('error', "Se ha producido un error al eliminar la Fuente de Noticias. Vuelva a intentarlo más tarde.");
+    }
+
+    /**
+     * Method to run the cronjob.
+     */
+    public function updateNews() {
+        $filePath = 'C:/xampp/htdocs/mynewscover.com/My_News_Cover_MVC/cronjob/newsgrabber.php';
+        $command = "php $filePath";
+        shell_exec($command);
     }
 }
