@@ -98,6 +98,8 @@ function saveNews($news)
  */
 function deleteAllNews()
 {
+    deleteNewsTags();
+
     $conn = getConnection();
     $sql = "DELETE FROM news";
     $result = $conn->query($sql);
@@ -140,4 +142,26 @@ function saveTags($newsId, $tag)
     $conn->query($sql);
 
     $conn->close();
+}
+
+/**
+ * Deletes all news sources from the database.
+ *
+ * @return bool Returns true if the deletion was successful, or false in case of an error.
+ */
+function deleteNewsTags()
+{
+    $conn = getConnection();
+    $sql = "DELETE FROM newstags";
+    $result = $conn->query($sql);
+
+    if ($result) {
+        if ($conn->affected_rows > 0) {
+            $conn->close();
+            return true;
+        }
+    }
+
+    $conn->close();
+    return false;
 }
