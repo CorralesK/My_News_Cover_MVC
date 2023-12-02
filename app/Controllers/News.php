@@ -5,9 +5,31 @@ namespace App\Controllers;
 use App\Controllers\BaseController;
 use App\Models\CategoriesModel;
 use App\Models\NewsModel;
+use App\Models\TagsModel;
 
 class News extends BaseController
 {
+    protected $categoriesModel;
+    protected $newsModel;
+    protected $tagsModel;
+    protected $session;
+    protected $data;
+
+    /**
+     * Constructor method for the NewsController class.
+     * Initializes necessary models and session data.
+     */
+    public function __construct()
+    {
+        $this->categoriesModel = model(CategoriesModel::class);
+        $this->newsModel = model(NewsModel::class);
+        $this->tagsModel = model(TagsModel::class);
+        $this->session = session();
+
+        $this->data['title'] = 'My Cover';
+        $this->data['categories'] = $this->categoriesModel->getByUser($this->session->get('user')['id']);
+    }
+
     /**
      * Method to display the home page with the list of news.
      *
@@ -15,17 +37,9 @@ class News extends BaseController
      */
     public function index()
     {
-        $newsModel = model(NewsModel::class);
-        $categoriesModel = model(CategoriesModel::class);
-        $session = session();
+        $this->data['news'] = $this->newsModel->getNews($this->session->get('user')['id']);
 
-        $data = [
-            'title'         => 'My Cover',
-            'news'          => $newsModel->getNews($session->get('user')['id']),
-            'categories'    => $categoriesModel->getByUser($session->get('user')['id']),
-        ];
-
-        return view('Users/index', $data);
+        return view('Users/index', $this->data);
     }
 
     /**
@@ -35,17 +49,9 @@ class News extends BaseController
      */
     public function showBYCategory($categoryID = null)
     {
-        $newsModel = model(NewsModel::class);
-        $categoriesModel = model(CategoriesModel::class);
-        $session = session();
+        $this->data['news'] = $this->newsModel->getNews($this->session->get('user')['id'], $categoryID);
 
-        $data = [
-            'title'         => 'My Cover',
-            'news'          => $newsModel->getNews($session->get('user')['id'], $categoryID),
-            'categories'    => $categoriesModel->getByUser($session->get('user')['id']),
-        ];
-
-        return view('Users/index', $data);
+        return view('Users/index', $this->data);
     }
 
     /**
@@ -55,21 +61,13 @@ class News extends BaseController
      */
     public function search()
     {
-        $newsModel = model(NewsModel::class);
-        $categoriesModel = model(CategoriesModel::class);
-        $session = session();
-
         $word = $this->request->getVar('search');
-        
-        $data = [
-            'title'         => 'My Cover',
-            'news'          => $newsModel->search($session->get('user')['id'], $word),
-            'categories'    => $categoriesModel->getByUser($session->get('user')['id']),
-        ];
 
-        if ($data['news'] == null) {
-            $data['error'] = 'No se encontraron resultados para: "' . $word . '"';
+        $this->data['news'] = $this->newsModel->search($this->session->get('user')['id'], $word);
+
+        if ($this->data['news'] == null) {
+            $this->data['error'] = 'No se encontraron resultados para: "' . $word . '"';
         }
-        return view('Users/index', $data);
+        return view('Users/index', $this->data);
     }
 }
