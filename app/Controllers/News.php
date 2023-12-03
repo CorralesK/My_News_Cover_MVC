@@ -4,12 +4,14 @@ namespace App\Controllers;
 
 use App\Controllers\BaseController;
 use App\Models\CategoriesModel;
+use App\Models\NewsSourcesModel;
 use App\Models\NewsModel;
 use App\Models\TagsModel;
 
 class News extends BaseController
 {
     protected $categoriesModel;
+    protected $sourcesModel;
     protected $newsModel;
     protected $tagsModel;
     protected $session;
@@ -22,6 +24,7 @@ class News extends BaseController
     public function __construct()
     {
         $this->categoriesModel = model(CategoriesModel::class);
+        $this->sourcesModel = model(NewsSourcesModel::class);
         $this->newsModel = model(NewsModel::class);
         $this->tagsModel = model(TagsModel::class);
         $this->session = session();
@@ -38,6 +41,10 @@ class News extends BaseController
      */
     public function index()
     {
+        if (!$this->sourcesModel->hasNewsSources($this->session->get('user')['id'])) {
+            return redirect()->to(base_url('newsSources/create'));
+        }
+
         $this->data['news'] = $this->newsModel->getNews($this->session->get('user')['id']);
 
         return view('Users/index', $this->data);
