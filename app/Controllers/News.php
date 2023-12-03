@@ -28,6 +28,7 @@ class News extends BaseController
 
         $this->data['title'] = 'My Cover';
         $this->data['categories'] = $this->categoriesModel->getByUser($this->session->get('user')['id']);
+        $this->data['tags'] = $this->tagsModel->getTags($this->session->get('user')['id']);
     }
 
     /**
@@ -43,13 +44,26 @@ class News extends BaseController
     }
 
     /**
-     * Method to display the home page with the list of news.
+     * Method for displaying the home page with the list of news according to the selected category
      *
      * @return \CodeIgniterHTTP\RedirectResponse Redirects to the home page.
      */
     public function showBYCategory($categoryID = null)
     {
         $this->data['news'] = $this->newsModel->getNews($this->session->get('user')['id'], $categoryID);
+
+        return view('Users/index', $this->data);
+    }
+
+    /**
+     * Method to display the home page with the list of news according to the selected tags.
+     *
+     * @return \CodeIgniterHTTP\RedirectResponse Redirects to the home page.
+     */
+    public function showBYTags()
+    {
+        $tagsSelected = $this->request->getPost('tags');
+        $this->data['news'] = $this->newsModel->showBYTags($this->session->get('user')['id'], $tagsSelected);
 
         return view('Users/index', $this->data);
     }

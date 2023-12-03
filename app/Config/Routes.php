@@ -10,6 +10,7 @@ use CodeIgniter\Router\RouteCollection;
  $routes->get('home', 'News::index');
  $routes->get('home/(:num)', 'News::showBYCategory/$1');
  $routes->get('home/search', 'News::search');
+ $routes->post('home/tags', 'News::showBYTags');
 
  //Users
  $routes->get('/', 'Users::index');

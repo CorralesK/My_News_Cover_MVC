@@ -82,4 +82,28 @@ class News extends Model
         }
         return $query->orderBy('date', 'DESC')->get(10)->getResultArray();
     }
+
+    /**
+     * Get news filtered by tags and user ID.
+     *
+     * @param int $userId The user ID for whom to retrieve news.
+     * @param array $tags An array of tag IDs for filtering news. If empty, get all news for the user.
+     * @return array An array of news items that match the specified criteria.
+     */
+    public function showBYTags($userId, $tags)
+    {
+        // If no tags are selected, retrieve all news for the user
+        if (empty($tags)) {
+            return $this->getNews($userId);
+        }
+
+        $query = $this->select('news.id, title, description, permanlink, date, newsSourceId, userId, GROUP_CONCAT(c.name) AS category, img')
+            ->join('newstags AS nt', 'nt.newsId = news.id')
+            ->join('categories AS c', 'c.id = categoryId', 'left')
+            ->whereIn('nt.tagId', $tags)
+            ->where('news.userId', $userId)
+            ->groupBy('news.id');
+
+        return $query->orderBy('date', 'DESC')->findAll();
+    }
 }

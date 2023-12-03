@@ -13,6 +13,7 @@ body {
     background-color: var(--secondary);
     display: flex;
     flex-direction: column;
+    box-sizing: border-box;
 }
 
 .container {
@@ -38,4 +39,67 @@ body {
 .card-footer {
     border-top: 0;
     background-color: #ffffff;
+}
+
+.wrapper {
+    flex: 1;
+    display: flex;
+    padding: 5px;
+    overflow-x: hidden;
+    position: relative;
+}
+
+.icon {
+    position: relative;
+    top: 0;
+    display: flex;
+    align-items: center;
+    text-align: center;
+}
+
+.icon:first-child {
+    left: 0;
+    display: none;
+}
+
+.icon:last-child {
+    right: 0;
+    justify-content: flex-end;
+}
+
+.icon i {
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+    line-height: 40px;
+    border-radius: 50%;
+}
+
+.icon i:hover {
+    background: #efedfb;
+}
+
+.wrapper .tabs-box {
+    margin: 0;
+    display: flex;
+    overflow-x: hidden;
+    scroll-behavior: smooth;
+}
+
+.tabs-box.dragging {
+    scroll-behavior: auto;
+    cursor: grab;
+}
+
+.tabs-box .tab {
+    cursor: pointer;
+    font-size: 1rem;
+    white-space: nowrap;
+    border-radius: 10px;
+    background-color: #f5f4fc;
+}
+
+.wrapper .tab-box.dragging .tab {
+    user-select: none;
+    pointer-events: none;
 }
