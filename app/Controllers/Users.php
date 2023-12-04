@@ -137,12 +137,17 @@ My News Cover');
         return $email->send();
     }
 
+    /**
+     * Method for managing the process of making a user's news cover public.
+     *
+     * @return \CodeIgniterHTTP\RedirectResponse Redirects to the home page after the update.
+     */
     public function publish()
     {
         $userModel = model(UsersModel::class);
         $session = session();
         $userId = $session->get('user')['id'];
-        
+
         $user = $userModel->where('id', $userId)->first();
 
         if ($this->request->getPost('publish')) {
@@ -160,16 +165,27 @@ My News Cover');
         return redirect()->to(base_url('home'));
     }
 
+    /**
+     * Method to redirect to the public home page of a specific user.
+     *
+     * @param string $encryptedEmail The encrypted email parameter.
+     * @throws \CodeIgniterExceptionsPageNotFoundException If the user is not found or the news cover page is private.
+     */
     public function userCoverPublic($encryptedEmail)
     {
         $email = base64_decode($encryptedEmail);
         $userModel = model(UsersModel::class);
 
-        $userData = $userModel->where('email', $email, 'public', 1)->first();
-        
-        $session = session();
-        $session->set('user', $userData);
+        $userData = $userModel->where(['email' => $email, 'public' => 1])->first();
 
-        return redirect()->to(base_url('home'));
+        if ($userData) {
+            $session = session();
+            $session->set('user', $userData);
+
+            return redirect()->to(base_url('home'));
+            
+        } else {
+            throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
+        }
     }
 }
