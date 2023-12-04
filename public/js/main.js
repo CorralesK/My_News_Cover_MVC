@@ -1,5 +1,5 @@
-const tabsBox = document.querySelector(".tabs-box"),
-    arrowIcons = document.querySelectorAll(".icon i");
+const tabsBox = document.getElementById('tabs-box');
+const arrowIcons = document.querySelectorAll(".icon i");
 
 let isDragging = false;
 
@@ -23,7 +23,6 @@ arrowIcons.forEach((icon) => {
     handleIcons(scrollWidth);
   });
 });
-
 /**
  * Handles dragging behavior when the mouse is moved.
  * @param {MouseEvent} e - The mouse event.
@@ -45,6 +44,25 @@ const dragStop = () => {
 };
 
 // Event listeners for dragging behavior
-tabsBox.addEventListener("mousedown", () => (isDragging = true));
+tabsBox.addEventListener("mousedown", () => {
+  isDragging = true
+});
 tabsBox.addEventListener("mousemove", dragging);
 document.addEventListener("mouseup", dragStop);
+
+
+//Copy button
+const selection = window.getSelection();
+const range = document.createRange();
+const url = document.getElementById('urlContainer');
+
+// Assign click event to the button with ID 'copyButton'
+document.getElementById('copy-btn').addEventListener('click', () => {
+  range.selectNodeContents(url);
+  selection.removeAllRanges();
+  selection.addRange(range);
+  const successful = document.execCommand('copy');
+  if(successful){
+    alert('¡URL copiada!');
+  }
+});

@@ -136,4 +136,40 @@ My News Cover');
 
         return $email->send();
     }
+
+    public function publish()
+    {
+        $userModel = model(UsersModel::class);
+        $session = session();
+        $userId = $session->get('user')['id'];
+        
+        $user = $userModel->where('id', $userId)->first();
+
+        if ($this->request->getPost('publish')) {
+
+            $userModel->update($userId, ['public' => 1]);
+            $user['publishURL'] = base_url("users/" . base64_encode($user['email']));
+            $user['public'] = 1;
+
+        } else {
+            $userModel->update($userId, ['public' => 0]);
+            $user['public'] = 0;
+        }
+
+        $session->set('user', $user);
+        return redirect()->to(base_url('home'));
+    }
+
+    public function userCoverPublic($encryptedEmail)
+    {
+        $email = base64_decode($encryptedEmail);
+        $userModel = model(UsersModel::class);
+
+        $userData = $userModel->where('email', $email, 'public', 1)->first();
+        
+        $session = session();
+        $session->set('user', $userData);
+
+        return redirect()->to(base_url('home'));
+    }
 }

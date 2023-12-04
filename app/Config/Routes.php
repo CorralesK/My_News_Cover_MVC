@@ -6,14 +6,14 @@ use CodeIgniter\Router\RouteCollection;
  * @var RouteCollection $routes
  */
 
- //My Cover
- $routes->get('home', 'News::index');
- $routes->get('home/(:num)', 'News::showBYCategory/$1');
- $routes->get('home/search', 'News::search');
- $routes->post('home/tags', 'News::showBYTags');
+//My Cover
+$routes->get('home', 'News::index');
+$routes->get('home/(:num)', 'News::showBYCategory/$1');
+$routes->get('home/search', 'News::search');
+$routes->post('home/tags', 'News::showBYTags');
 
- //Users
- $routes->get('/', 'Users::index');
+//Users
+$routes->get('/', 'Users::index');
 $routes->get('login', 'Users::index');
 $routes->post('auth/login', 'Users::login');
 
@@ -21,6 +21,9 @@ $routes->get('signup', 'Users::signup');
 $routes->post('auth/store', 'Users::store');
 
 $routes->get('logout', 'Users::logout');
+
+$routes->post('publish', 'Users::publish');
+$routes->get('users/(:segment)', 'Users::userCoverPublic/$1');
 
 //Categories
 $routes->get('categories', 'Categories::index');
