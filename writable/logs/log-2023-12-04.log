@@ -1,5 +1,0 @@
-CRITICAL - 2023-12-04 23:26:24 --> Class "App\Controllers\Errors\PageNotFound" not found
-in SYSTEMPATH\CodeIgniter.php on line 914.
- 1 SYSTEMPATH\CodeIgniter.php(970): CodeIgniter\CodeIgniter->createController()
- 2 SYSTEMPATH\CodeIgniter.php(370): CodeIgniter\CodeIgniter->display404errors(Object(CodeIgniter\Exceptions\PageNotFoundException))
- 3 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()

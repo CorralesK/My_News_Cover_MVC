@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap");
+
 :root {
     --primary: #273746;
 }
@@ -7,13 +9,16 @@
     border-color: var(--primary);
 }
 
+* {
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
 body {
     min-height: 100vh;
-    font-family: 'Poppins', sans-serif;
     background-color: var(--secondary);
     display: flex;
     flex-direction: column;
-    box-sizing: border-box;
 }
 
 .container {
@@ -43,47 +48,62 @@ body {
 
 .wrapper {
     flex: 1;
-    display: flex;
-    padding: 5px;
-    overflow: hidden;
     position: relative;
+    overflow-x: hidden;
+    border-radius: 13px;
+    align-items: center;
 }
 
-.icon {
-    position: relative;
+.wrapper .icon {
+    position: absolute;
     top: 0;
+    height: 80%;
+    width: 105px;
     display: flex;
     align-items: center;
-    text-align: center;
 }
 
 .icon:first-child {
     left: 0;
     display: none;
+    background: linear-gradient(90deg, #fff 70%, transparent);
 }
 
 .icon:last-child {
     right: 0;
     justify-content: flex-end;
+    background: linear-gradient(-90deg, #fff 70%, transparent);
 }
 
 .icon i {
-    width: 40px;
-    height: 40px;
+    width: 45px;
+    height: 45px;
     cursor: pointer;
-    line-height: 40px;
+    text-align: center;
+    line-height: 45px;
     border-radius: 50%;
 }
 
 .icon i:hover {
-    background: #efedfb;
+    background-color: #efedfb;
+}
+
+.icon:first-child i {
+    margin-left: 15px;
+}
+
+.icon:last-child i {
+    margin-right: 15px;
 }
 
 .wrapper .tabs-box {
-    margin: 0;
     display: flex;
-    overflow: hidden;
+    gap: 12px;
+    list-style: none;
+    overflow-x: hidden;
     scroll-behavior: smooth;
+    align-items: center;
+    line-height: 30px;
 }
 
 .tabs-box.dragging {
@@ -91,15 +111,25 @@ body {
     cursor: grab;
 }
 
-.tabs-box .tab {
-    cursor: pointer;
-    font-size: 1rem;
-    white-space: nowrap;
-    border-radius: 10px;
-    background-color: #f5f4fc;
-}
-
-.wrapper .tab-box.dragging .tab {
+.tabs-box.dragging .tab {
     user-select: none;
     pointer-events: none;
+}
+
+
+.check {
+    display: none;
+}
+
+.button {
+    display: inline-block;
+    padding: 6px 12px;
+    cursor: pointer;
+    white-space: nowrap;
+    background-color: #f5f4fd;
+    border-radius: 10px;
+}
+
+.check:checked+.button {
+    border: 1px solid black;
 }

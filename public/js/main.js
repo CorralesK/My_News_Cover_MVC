@@ -1,7 +1,35 @@
-const tabsBox = document.getElementById('tabs-box');
-const arrowIcons = document.querySelectorAll(".icon i");
+//Copy button
+const selection = window.getSelection(),
+  range = document.createRange(),
+  url = document.getElementById('urlContainer');
+
+// Assign click event to the button with ID 'copyButton'
+document.addEventListener('DOMContentLoaded', () => {
+  const copyButton = document.getElementById('copy-btn');
+
+  if (copyButton) {
+    copyButton.addEventListener('click', () => {
+
+      range.selectNodeContents(url);
+      selection.removeAllRanges();
+      selection.addRange(range);
+
+      const successful = document.execCommand('copy');
+
+      if (successful) {
+        alert('¡URL copiada!');
+      }
+    });
+  }
+});
+
+//scrollable tabs
+const tabsBox = document.querySelector(".tabs-box"),
+  arrowIcons = document.querySelectorAll(".icon i");
 
 let isDragging = false;
+let debounceTimer;
+
 
 /**
  * Handles the visibility of arrow icons based on the scroll value.
@@ -9,60 +37,18 @@ let isDragging = false;
  */
 const handleIcons = (scrollVal) => {
   let maxScrollableWidth = tabsBox.scrollWidth - tabsBox.clientWidth;
+
   arrowIcons[0].parentElement.style.display = scrollVal <= 0 ? "none" : "flex";
-  arrowIcons[1].parentElement.style.display =
-    maxScrollableWidth - scrollVal <= 1 ? "none" : "flex";
-};
+  arrowIcons[1].parentElement.style.display = maxScrollableWidth - scrollVal <= 1 ? "none" : "flex";
+}
 
 /**
  * Event listener for arrow icons to handle scrolling.
  */
 arrowIcons.forEach((icon) => {
   icon.addEventListener("click", () => {
-    let scrollWidth = (tabsBox.scrollLeft += icon.id === "left" ? -340 : 340);
+    // if clicked icon is left, reduce 350 from tabsBox scrollLeft else add
+    let scrollWidth = tabsBox.scrollLeft += icon.id === "left" ? -340 : 340;
     handleIcons(scrollWidth);
   });
-});
-/**
- * Handles dragging behavior when the mouse is moved.
- * @param {MouseEvent} e - The mouse event.
- */
-const dragging = (e) => {
-  if (!isDragging) return;
-
-  tabsBox.classList.add("dragging");
-  tabsBox.scrollLeft -= e.movementX;
-  handleIcons(tabsBox.scrollLeft);
-};
-
-/**
- * Stops the dragging behavior when the mouse is released.
- */
-const dragStop = () => {
-  isDragging = false;
-  tabsBox.classList.remove("dragging");
-};
-
-// Event listeners for dragging behavior
-tabsBox.addEventListener("mousedown", () => {
-  isDragging = true
-});
-tabsBox.addEventListener("mousemove", dragging);
-document.addEventListener("mouseup", dragStop);
-
-
-//Copy button
-const selection = window.getSelection();
-const range = document.createRange();
-const url = document.getElementById('urlContainer');
-
-// Assign click event to the button with ID 'copyButton'
-document.getElementById('copy-btn').addEventListener('click', () => {
-  range.selectNodeContents(url);
-  selection.removeAllRanges();
-  selection.addRange(range);
-  const successful = document.execCommand('copy');
-  if(successful){
-    alert('¡URL copiada!');
-  }
 });
