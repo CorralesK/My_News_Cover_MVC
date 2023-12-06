@@ -125,4 +125,5 @@ class Categories extends BaseController
             return redirect()->to(base_url('categories'))->with('error', $e->getsuccess());
         }
     }
+
 }
