@@ -37,6 +37,10 @@ class News extends BaseController
         $this->data['tags'] = $this->tagsModel->getTags($this->userId);
         $this->data['isPublic'] = $this->session->get('user')['public'];
 
+        if(isset($this->session->get('user')['roleId'])){
+            $this->data['role'] = $this->session->get('user')['roleId'];
+        }
+
         if(isset($this->session->get('user')['publishURL'])){
             $this->data['publishURL'] = $this->session->get('user')['publishURL'];
         }

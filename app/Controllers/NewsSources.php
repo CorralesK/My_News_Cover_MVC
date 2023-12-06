@@ -8,6 +8,25 @@ use App\Models\NewsSourcesModel;
 
 class NewsSources extends BaseController
 {
+    protected $newsSourcesModel;
+    protected $categoriesModel;
+    protected $session;
+    protected $data;
+
+    /**
+     * Constructor method for the NewsSourcesController class.
+     * Initializes necessary models and session data.
+     */
+    public function __construct()
+    {
+        $this->newsSourcesModel = model(NewsSourcesModel::class);
+        $this->categoriesModel = model(CategoriesModel::class);
+        $this->session = session();
+
+        $this->data['role'] = $this->session->get('user')['roleId'];
+        $this->data['categories'] = $this->categoriesModel->getCategories();
+    }
+
     /**
      * Method to display the table of news sources.
      *
@@ -15,16 +34,10 @@ class NewsSources extends BaseController
      */
     public function index()
     {
-        $newsSourcesModel = model(NewsSourcesModel::class);
-        $categoriesModel = model(CategoriesModel::class);
-        $session = session();
+        $this->data['title'] = 'Fuentes de Noticias';
+        $this->data['sources'] = $this->newsSourcesModel->getByUser($this->session->get('user')['id']);
 
-        $data = [
-            'title'     => 'Fuentes de Noticias',
-            'sources'   => $newsSourcesModel->getByUser($session->get('user')['id']),
-        ];
-
-        return view('Users/NewsSources/index', $data);
+        return view('Users/NewsSources/index', $this->data);
     }
 
     /**
@@ -34,14 +47,9 @@ class NewsSources extends BaseController
      */
     public function create()
     {
-        $categoriesModel = model(CategoriesModel::class);
+        $this->data['title'] = 'Agregar Fuente';
 
-        $data = [
-            'title'         => 'Agregar Fuente',
-            'categories'    => $categoriesModel->getCategories(),
-        ];
-
-        return view('Users/NewsSources/createSource', $data);
+        return view('Users/NewsSources/createSource', $this->data);
     }
 
     /**
@@ -51,21 +59,17 @@ class NewsSources extends BaseController
      */
     public function store()
     {
-        $newsSourcesModel = model(NewsSourcesModel::class);
-        $session = session();
-
         $source = [
-            'url'           => $this->request->getPost('url'),
-            'name'          => $this->request->getPost('name'),
-            'categoryId'    => $this->request->getPost('category'),
-            'userId'        => $session->get('user')['id'],
+            'url' => $this->request->getPost('url'),
+            'name' => $this->request->getPost('name'),
+            'categoryId' => $this->request->getPost('category'),
+            'userId' => $this->session->get('user')['id'],
         ];
 
-        updateNews();
-
-        if ($newsSourcesModel->insert($source)) {
+        if ($this->newsSourcesModel->insert($source)) {
             return redirect()->to(base_url('newsSources'))->with('success', "La fuente se ha guardado correctamente.");
         }
+
         return redirect()->to(base_url('newsSources'))->with('error', "Se ha producido un error al guardar la fuente. Vuelva a intentarlo más tarde.");
     }
 
@@ -82,19 +86,14 @@ class NewsSources extends BaseController
             return redirect()->to(base_url('newsSources'))->with('error', 'ID de Fuente no proporcionado');
         }
 
-        $newsSourcesModel = model(NewsSourcesModel::class);
-        $categoriesModel = model(CategoriesModel::class);
+        $this->data['title'] = 'Editar Fuente de Noticias';
+        $this->data['source'] = $this->newsSourcesModel->find($id);
 
-        $data = [
-            'title'         => 'Editar Fuente de Noticias',
-            'source'        => $newsSourcesModel->find($id),
-            'categories'    => $categoriesModel->getCategories(),
-        ];
-
-        if ($data['source'] === null) {
+        if ($this->data['source'] === null) {
             return redirect()->to(base_url('newsSources'))->with('error', 'Fuente de Noticias no encontrada');
         }
-        return view('Users/NewsSources/editSource', $data);
+
+        return view('Users/NewsSources/editSource', $this->data);
     }
 
     /**
@@ -107,16 +106,15 @@ class NewsSources extends BaseController
     public function update($id = null)
     {
         $sourceData = [
-            'url'           => $this->request->getPost('url'),
-            'name'          => $this->request->getPost('name'),
-            'categoryId'    => $this->request->getPost('category'),
+            'url' => $this->request->getPost('url'),
+            'name' => $this->request->getPost('name'),
+            'categoryId' => $this->request->getPost('category'),
         ];
 
-        $newsSourcesModel = model(NewsSourcesModel::class);
-
-        if ($newsSourcesModel->update($id, $sourceData)) {
+        if ($this->newsSourcesModel->update($id, $sourceData)) {
             return redirect()->to(base_url('newsSources'))->with('success', "La Fuente de Noticias se ha actualizado correctamente.");
         }
+
         return redirect()->to(base_url('newsSources'))->with('error', "Se ha producido un error al actualizar la Fuente de Noticias. Vuelva a intentarlo más tarde.");
     }
 
@@ -133,20 +131,10 @@ class NewsSources extends BaseController
             return redirect()->to(base_url('newsSources'))->with('error', 'ID de Fuente de Noticias no proporcionado');
         }
 
-        $newsSourcesModel = model(NewsSourcesModel::class);
-
-        if ($newsSourcesModel->delete($id)) {
+        if ($this->newsSourcesModel->delete($id)) {
             return redirect()->to(base_url('newsSources'))->with('success', "Fuente de Noticias eliminada exitosamente");
         }
-        return redirect()->to(base_url('newsSources'))->with('error', "Se ha producido un error al eliminar la Fuente de Noticias. Vuelva a intentarlo más tarde.");
-    }
 
-    /**
-     * Method to run the cronjob.
-     */
-    public function updateNews() {
-        $filePath = 'C:/xampp/htdocs/mynewscover.com/My_News_Cover_MVC/cronjob/newsgrabber.php';
-        $command = "php $filePath";
-        shell_exec($command);
+        return redirect()->to(base_url('newsSources'))->with('error', "Se ha producido un error al eliminar la Fuente de Noticias. Vuelva a intentarlo más tarde.");
     }
 }

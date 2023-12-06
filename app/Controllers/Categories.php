@@ -7,6 +7,22 @@ use App\Models\CategoriesModel;
 
 class Categories extends BaseController
 {
+    protected $categoriesModel;
+    protected $session;
+    protected $data;
+
+    /**
+     * Constructor method for the CategoriesController class.
+     * Initializes necessary models and session data.
+     */
+    public function __construct()
+    {
+        $this->categoriesModel = model(CategoriesModel::class);
+        $this->session = session();
+
+        $this->data['role'] = $this->session->get('user')['roleId'];
+    }
+
     /**
      * Method to display the list of news categories.
      *
@@ -14,14 +30,10 @@ class Categories extends BaseController
      */
     public function index()
     {
-        $categoriesModel = model(CategoriesModel::class);
+        $this->data['title'] = 'Categorias de Noticias';
+        $this->data['categories'] = $this->categoriesModel->getCategories();
 
-        $data = [
-            'title'         => 'Categorias de Noticias',
-            'categories'    => $categoriesModel->getCategories(),
-        ];
-
-        return view('Categories/index', $data);
+        return view('Categories/index', $this->data);
     }
 
     /**
@@ -31,9 +43,9 @@ class Categories extends BaseController
      */
     public function create()
     {
-        $data['title'] = 'Agregar Categoría';
+        $this->data['title'] = 'Agregar Categoría';
 
-        return view('Categories/createCategory', $data);
+        return view('Categories/createCategory', $this->data);
     }
 
     /**
@@ -43,13 +55,12 @@ class Categories extends BaseController
      */
     public function store()
     {
-        $categoriesModel = model(CategoriesModel::class);
-
         $category['name'] = $this->request->getPost('name');
 
-        if ($categoriesModel->insert($category)) {
+        if ($this->categoriesModel->insert($category)) {
             return redirect()->to(base_url('categories'))->with('success', "La categoría se ha guardado correctamente.");
         }
+
         return redirect()->to(base_url('categories'))->with('error', "Se ha producido un error al guardar la categoría. Vuelva a intentarlo más tarde.");
     }
 
@@ -65,18 +76,15 @@ class Categories extends BaseController
         if ($id === null) {
             return redirect()->to(base_url('categories'))->with('error', 'ID de categoría no proporcionado');
         }
-        $categoriesModel = model(CategoriesModel::class);
 
-        $data = [
-            'title'         => 'Editar Categoría',
-            'categories'    => $categoriesModel->find($id),
-        ];
+        $this->data['title'] = 'Editar Categoría';
+        $this->data['category'] = $this->categoriesModel->find($id);
 
-        if ($data['category'] === null) {
+        if ($this->data['category'] === null) {
             return redirect()->to(base_url('categories'))->with('error', 'Categoría no encontrada');
         }
 
-        return view('categories/editCategory', $data);
+        return view('categories/editCategory', $this->data);
     }
 
     /**
@@ -86,14 +94,13 @@ class Categories extends BaseController
      */
     public function update()
     {
-        $categoriesModel = model(CategoriesModel::class);
-
         $categoryId = $this->request->getPost('id');
         $categoryData['name'] = $this->request->getPost('name');
 
-        if ($categoriesModel->update($categoryId, $categoryData)) {
+        if ($this->categoriesModel->update($categoryId, $categoryData)) {
             return redirect()->to(base_url('categories'))->with('success', "La categoría se ha actualizado correctamente.");
         }
+
         return redirect()->to(base_url('categories'))->with('error', "Se ha producido un error al actualizar la categoría. Vuelva a intentarlo más tarde.");
     }
 
@@ -109,10 +116,9 @@ class Categories extends BaseController
         if ($id === null) {
             return redirect()->to(base_url('categories'))->with('error', 'ID de categoría no proporcionado');
         }
-        $categoriesModel = model(CategoriesModel::class);
-        
+
         try {
-            $categoriesModel->delete($id);
+            $this->categoriesModel->delete($id);
             return redirect()->to(base_url('categories'))->with('success', 'Categoría eliminada exitosamente.');
 
         } catch (\Exception $e) {

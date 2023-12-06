@@ -22,23 +22,5 @@
             </svg>
         </button>
     </form>
-
-    <form id="publishForm" action="<?= base_url('publish') ?>" method="post">
-        <div class="form-check form-switch">
-            <input class="form-check-input" name="publish" type="checkbox" id="flexSwitchCheckDefault" <?= $isPublic ? 'checked' : '' ?> onchange="document.getElementById('publishForm').submit();">
-            <label class="form-check-label text-light" for="flexSwitchCheckDefault">Portada pública</label>
-        </div>
-    </form>
-    <?php if (isset($publishURL)): ?>
-    <div class="input-group">
-        <span class="overflow-x-scroll text-light w-25" id="urlContainer"> <?= esc($publishURL) ?> </span>
-        <button class="btn btn-outline-secondary input-group-text" type="submit" id="copy-btn">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-copy" viewBox="0 0 16 16">
-                <path fill-rule="evenodd" d="M4 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2zm2-1a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1zM2 5a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1v-1h1v1a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h1v1z"/>
-            </svg>
-        </button>
-    </div>
-    <?php endif?>
-
   </div>
 </nav>

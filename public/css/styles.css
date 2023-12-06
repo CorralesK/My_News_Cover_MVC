@@ -88,14 +88,6 @@ body {
     background-color: #efedfb;
 }
 
-.icon:first-child i {
-    margin-left: 15px;
-}
-
-.icon:last-child i {
-    margin-right: 15px;
-}
-
 .wrapper .tabs-box {
     display: flex;
     gap: 12px;
@@ -132,4 +124,18 @@ body {
 
 .check:checked+.button {
     border: 1px solid black;
+}
+
+.user {
+    width: 260px;
+}
+
+.user .input-group {
+    display: flex;
+    flex-wrap: nowrap;
+    padding: 4%;
+    margin: 0.5rem;;
+    border: 1px solid rgba(33, 33, 33, 0.334);
+    border-radius: 5px;
+    width: 240px;
 }

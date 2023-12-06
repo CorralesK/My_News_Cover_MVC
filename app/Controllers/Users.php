@@ -7,6 +7,19 @@ use App\Models\UsersModel;
 
 class Users extends BaseController
 {
+    protected $userModel;
+    protected $session;
+
+    /**
+     * Constructor method for the CategoriesController class.
+     * Initializes necessary models and session data.
+     */
+    public function __construct()
+    {
+        $this->userModel = model(UsersModel::class);
+        $this->session = session();
+    }
+
     /**
      * Method to display the form to login.
      *
@@ -14,8 +27,7 @@ class Users extends BaseController
      */
     public function index()
     {
-        $session = session();
-        $session->destroy();
+        $this->session->destroy();
 
         $data['title'] = 'Login';
 
@@ -38,13 +50,10 @@ class Users extends BaseController
             $email = $this->request->getPost('email');
             $password = $this->request->getPost('password');
 
-            $userModel = model(UsersModel::class);
-
-            $user = $userModel->where('email', $email)->first();
+            $user = $this->userModel->where('email', $email)->first();
 
             if ($user && password_verify($password, $user['password'])) {
-                $session = session();
-                $session->set('user', $user);
+                $this->session->set('user', $user);
 
                 $redirectURL = ($user['roleId'] == 1) ? 'categories' : 'home';
                 return redirect()->to(base_url($redirectURL));
@@ -73,9 +82,7 @@ class Users extends BaseController
      */
     public function store()
     {
-        $userModel = model(UsersModel::class);
-
-        $existingUser = $userModel->where('email', $this->request->getPost('email'))->first();
+        $existingUser = $this->userModel->where('email', $this->request->getPost('email'))->first();
 
         if ($existingUser) {
             return redirect()->to(base_url('signup'))->with('error', 'El usuario ya existe');
@@ -90,11 +97,10 @@ class Users extends BaseController
         ];
 
         if ($this->sendEmail($user)) {
-            $userId = $userModel->insert($user);
+            $userId = $this->userModel->insert($user);
 
             if ($userId) {
-                $session = session();
-                $session->set('user', $userModel->find($userId));
+                $this->session->set('user', $this->userModel->find($userId));
 
                 return redirect()->to(base_url('home'));
             }
@@ -109,8 +115,7 @@ class Users extends BaseController
      */
     public function logout()
     {
-        $session = session();
-        $session->destroy();
+        $this->session->destroy();
 
         return redirect()->to(base_url('login'));
     }
@@ -144,24 +149,22 @@ My News Cover');
      */
     public function publish()
     {
-        $userModel = model(UsersModel::class);
-        $session = session();
-        $userId = $session->get('user')['id'];
+        $userId = $this->session->get('user')['id'];
 
-        $user = $userModel->where('id', $userId)->first();
+        $user = $this->userModel->where('id', $userId)->first();
 
         if ($this->request->getPost('publish')) {
 
-            $userModel->update($userId, ['public' => 1]);
+            $this->userModel->update($userId, ['public' => 1]);
             $user['publishURL'] = base_url("users/" . base64_encode($user['email']));
             $user['public'] = 1;
 
         } else {
-            $userModel->update($userId, ['public' => 0]);
+            $this->userModel->update($userId, ['public' => 0]);
             $user['public'] = 0;
         }
 
-        $session->set('user', $user);
+        $this->session->set('user', $user);
         return redirect()->to(base_url('home'));
     }
 
@@ -174,13 +177,13 @@ My News Cover');
     public function userCoverPublic($encryptedEmail)
     {
         $email = base64_decode($encryptedEmail);
-        $userModel = model(UsersModel::class);
 
-        $userData = $userModel->where(['email' => $email, 'public' => 1])->first();
+        $userData = $this->userModel->where(['email' => $email, 'public' => 1])->first();
 
         if ($userData) {
-            $session = session();
-            $session->set('user', $userData);
+            unset($userData['roleId']);
+
+            $this->session->set('user', $userData);
 
             return redirect()->to(base_url('home'));
             
