@@ -25,6 +25,7 @@ class Filters extends BaseConfig
         'honeypot'      => Honeypot::class,
         'invalidchars'  => InvalidChars::class,
         'secureheaders' => SecureHeaders::class,
+        'auth'          => \App\Filters\AuthFilter::class,
         'categories'    => \App\Filters\CategoriesFilter::class,
     ];
 
@@ -69,6 +70,7 @@ class Filters extends BaseConfig
      * 'isLoggedIn' => ['before' => ['account/*', 'profiles/*']]
      */
     public array $filters = [
-        'categories' => ['before' => ['categories']],
+        'auth'          => ['before' => ['categories', 'categories/*', 'newsSources', 'newsSources/*', 'home', 'home/*', 'publish']],
+        'categories'    => ['before' => ['categories', 'categories/*']],
     ];
 }
