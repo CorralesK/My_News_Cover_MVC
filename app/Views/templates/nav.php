@@ -3,11 +3,11 @@
 
     <ul class="nav nav-underline">
         <li class="nav-item">
-            <a class="nav-link text-light" aria-current="page" href="<?php echo base_url("home") ?>">Home</a>
+            <a class="nav-link text-light <?= (0 == $activeCategory) ? 'active' : '' ?>" aria-current="page" href="<?php echo base_url("home") ?>">Home</a>
         </li>
         <?php foreach ($categories as $category): ?>
         <li class="nav-item">
-        <a class="nav-link text-light" href="<?php echo base_url("home/{$category['id']}") ?>">
+        <a class="nav-link text-light <?= ($category['id'] == $activeCategory) ? 'active' : '' ?>" href="<?php echo base_url("home/{$category['id']}") ?>">
             <?php echo $category['name'] ?>
         </a>
         </li>

@@ -44,6 +44,10 @@ class News extends BaseController
         if(isset($this->session->get('user')['publishURL'])){
             $this->data['publishURL'] = $this->session->get('user')['publishURL'];
         }
+
+        $this->data['sourcesItem'] = '';
+        $this->data['homeItem'] = 'active';
+        $this->data['activeCategory'] = '';
     }
 
     /**
@@ -57,6 +61,8 @@ class News extends BaseController
             return redirect()->to(base_url('newsSources/create'));
         }
 
+        $this->data['activeCategory'] = 0;
+
         $this->data['news'] = $this->newsModel->getNews($this->userId);
         return view('Users/index', $this->data);
     }
@@ -69,6 +75,8 @@ class News extends BaseController
     public function showBYCategory($categoryID = null)
     {
         $this->data['news'] = $this->newsModel->getNews($this->userId, $categoryID);
+
+        $this->data['activeCategory'] = $categoryID;
 
         return view('Users/index', $this->data);
     }

@@ -8,7 +8,6 @@
         <thead>
             <tr>
                 <th>URL de la fuente</th>
-                <th>Nombre de la fuente</th>
                 <th>Categoría</th>
                 <th>Acción</th>
             </tr>
@@ -16,7 +15,6 @@
         <tbody>
             <?php foreach ($sources as $source): ?>
                 <tr>
-                <td><a href="<?= esc($source['url']); ?>"><?= esc($source['url']); ?></a></td>
                 <td><?= esc($source['name']); ?></td>
                 <td><?= esc($source['categoryName']); ?></td>
                 <td>

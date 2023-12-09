@@ -25,6 +25,8 @@ class NewsSources extends BaseController
 
         $this->data['role'] = $this->session->get('user')['roleId'];
         $this->data['categories'] = $this->categoriesModel->getCategories();
+        $this->data['sourcesItem'] = 'active';
+        $this->data['homeItem'] = '';
     }
 
     /**

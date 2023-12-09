@@ -28,8 +28,8 @@
                         <?php if ($role == 1): ?>
                             <li><a class="dropdown-item active" href="<?=base_url('categories')?>">Categorias</a></li>
                         <?php else: ?>
-                            <li><a class="dropdown-item" href="<?=base_url('home')?>">My Cover</a></li>
-                            <li><a class="dropdown-item" href="<?=base_url('newsSources')?>">Fuentes de Noticias</a></li>
+                            <li><a class="dropdown-item <?= $homeItem ?>" href="<?=base_url('home')?>">My Cover</a></li>
+                            <li><a class="dropdown-item <?= $sourcesItem ?>" href="<?=base_url('newsSources')?>">Fuentes de Noticias</a></li>
                         <?php endif;?>
                         <?php if (isset($isPublic)): ?>
                             <li>
