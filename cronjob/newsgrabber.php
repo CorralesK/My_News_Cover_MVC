@@ -29,15 +29,14 @@ function extractCD($content)
  */
 function getImgURL($item)
 {
+    preg_match('/<img[^>]+src="([^"]+)"[^>]*>/i', $item->description, $match);
+
     if (isset($item->enclosure['url'])) {
         return (string) $item->enclosure['url'];
     } elseif (isset($item->{'media:content'}['url'])) {
         return (string) $item->{'media:content'}['url'];
-    } else {
-        preg_match('/<img[^>]+src="([^"]+)"[^>]*>/i', $item->description, $match);
-        $descriptionImage = isset($match[1]) ? $match[1] : '';
-
-        return $descriptionImage;
+    } elseif (isset($match[1])) {
+        return $match[1];
     }
 
     return "https://static.vecteezy.com/system/resources/previews/004/776/093/non_2x/photo-icon-or-picture-icon-image-sign-and-symbol-vector.jpg";
